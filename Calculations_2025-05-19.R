@@ -1,4 +1,5 @@
 export <- FALSE
+multip <- 2
 # Data load ---------------------------------------------------------------
 library(tidyverse)
 theme_set(
@@ -388,10 +389,11 @@ if(!export){
 }
 
 # Export ------------------------------------------------------------
+if(export){
 # Fig. S2. Models all
 ggsave(
     plot = plots$s2_models.all, 
-    filename = paste0("export/Tab.S1_models.all_", Sys.Date(), ".pdf"), 
+    filename = paste0("export/Fig.S2_models.all_", Sys.Date(), ".pdf"), 
     height = 7, width = 11, dpi = 600)
     
 # Fig. 2. Models selected
@@ -403,11 +405,11 @@ ggsave(
 # + Table S3. Models all
     writexl::write_xlsx(
         tables$ts3_models.all,
-        paste0("export/Tab.2_models.selected_", Sys.Date(), ".xlsx")
+        paste0("export/Tab.S2_models.selected_", Sys.Date(), ".xlsx")
     )
 
 # Table 2. Models selected
-writexl::write_xlsx(tables$t2_mod.comps,  paste0("export/Tab._raref_", Sys.Date(), ".pdf"))
+writexl::write_xlsx(tables$t2_mod.comps,  paste0("export/Tab.2_models.comp_", Sys.Date(), ".xlsx"))
 # + Fig. 3. Rarefied number of species
 ggsave(
     paste0("export/Fig.3_rarefication_", Sys.Date(), ".pdf"), 
@@ -426,11 +428,13 @@ res$permanova %>%
     capture.output() %>% 
     `[`(-c(2, 3, 5, 6, 13, 14)) %>% 
     as.data.frame() %>% 
-    writexl::write_xlsx(paste0("export/t4a_permanova_", Sys.Date(), ".xlsx"))
+    writexl::write_xlsx(paste0("export/Tab.4a_permanova_", Sys.Date(), ".xlsx"))
 
 # Table 4. Average distances
 if(export){
     distances %>% 
         mutate_if(is.numeric, function(a){round(a, 2)}) %>% 
-        writexl::write_xlsx(paste0("export/distances_", Sys.Date(), ".xlsx"))
+        writexl::write_xlsx(paste0("export/Tab.4_distances_", Sys.Date(), ".xlsx"))
+}
+
 }
