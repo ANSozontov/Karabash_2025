@@ -149,7 +149,7 @@ model_viz_supp <- function(df0){
         mutate(model = NA)
     
     df1 %>% 
-        ggplot(aes(x = km, y = predicted, color = model, linetype = model)) +
+        ggplot(aes(x = km, y = predicted,  linetype = model)) + #
         geom_point(shape = 21, size = 3, data = df2, color = "black", alpha = 0.5) +
         geom_line() + 
         facet_wrap(~year, scales = "fixed", ncol = 1)  +
@@ -394,7 +394,7 @@ if(export){
 ggsave(
     plot = plots$s2_models.all, 
     filename = paste0("export/Fig.S2_models.all_", Sys.Date(), ".pdf"), 
-    height = 7, width = 11, dpi = 600)
+    height = 6, width = 11, dpi = 600)
     
 # Fig. 2. Models selected
 ggsave(
